@@ -17,7 +17,7 @@ using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter
 public class LocalizationTool
 {
     public static List<string> uiPathes = new List<string>() { "UI", "UICommon", "SmallGame", "Tutorial", "Apartment", "Agent", "ApartmentArea", "ApartmentRoom", "UIMall", "UIPrefab" };
-    public static List<string> wrongTCN = new List<string>() {"\\\\n", "老板", "猛犸", "癥", "外賣", "游園會", "防御", "登錄", "服務器", "斗", "日志", "愿", "鉆", "圣", "余", "家具", "土豆", "手撕面包", "面包", "面粉", "方便面", "夸", "云", "墙", "柜", "休閑", "游", "联系", "聯系", "体", "么", "后", "开" };
+    public static List<string> wrongTCN = new List<string>() { "\\\\n", "老板", "猛犸", "癥", "外賣", "游園會", "防御", "登錄", "服務器", "斗", "日志", "愿", "鉆", "圣", "余", "家具", "土豆", "手撕面包", "面包", "面粉", "方便面", "夸", "云", "墙", "柜", "休閑", "游", "联系", "聯系", "体", "么", "后", "开" };
     public static List<string> rightTCN = new List<string>() { "\\n", "老闆", "猛獁", "症", "外送", "園遊會", "防禦", "登入", "伺服器", "鬥", "日誌", "願", "鑽", "聖", "餘", "傢俱", "馬鈴薯", "手撕吐司", "麵包", "麵粉", "速食麵", "誇", "雲", "牆", "櫃", "休閒", "遊", "聯繫", "聯繫", "體", "麼", "後", "開" };
 
     [MenuItem("Tools/Localization/Check")]
@@ -44,10 +44,10 @@ public class LocalizationTool
                     var referencesMesh = new List<TextMesh>();
                     foreach (var com in ui.GetComponentsInChildren<MonoBehaviour>(true))
                     {
-                        if(null == com)
+                        if (null == com)
                         {
                             continue;
-                        }    
+                        }
 
                         var ts = com.GetComponents<TextScript>();
                         if (ts.Length > 1)
@@ -73,7 +73,7 @@ public class LocalizationTool
     [MenuItem("Tools/Localization/Check And Reset")]
     public static void LocalizationCheckAndReset()
     {
-        if(EditorUtility.DisplayDialog("Warning", "已经实装翻译文本后不建议全量捕获文本，建议使用Check命令增量更新。是否依然要进行Check&Reset操作？", "非常确定", "不了不了"))
+        if (EditorUtility.DisplayDialog("Warning", "已经实装翻译文本后不建议全量捕获文本，建议使用Check命令增量更新。是否依然要进行Check&Reset操作？", "非常确定", "不了不了"))
         {
             if (EditorUtility.DisplayDialog("Warning", "再次确定要改？", "非常确定", "不了不了"))
                 LocalizationCheck(true);
@@ -148,7 +148,7 @@ public class LocalizationTool
                                     var value = field.GetValue(com);
                                     if (null != value)
                                     {
-                                        foreach(var item in value as Text[])
+                                        foreach (var item in value as Text[])
                                             references.Add(item);
                                     }
                                 }
@@ -304,16 +304,16 @@ public class LocalizationTool
 
         //脚本
         prefix = Path.Combine(Application.dataPath, "Scripts");
-        var scriptPath = new List<string>() { "Game", "UI", "Network" , "SmallGame", "3rd/Common" };
+        var scriptPath = new List<string>() { "Game", "UI", "Network", "SmallGame", "3rd/Common" };
         var scriptIgnore = new List<string>() { "UICheating" };
 
-        foreach(var path in scriptPath)
+        foreach (var path in scriptPath)
         {
             var dir = (path.Contains("/") || path.Contains("\\")) ? Path.Combine(Application.dataPath, path) : Path.Combine(prefix, path);
             var files = Directory.GetFiles(dir, "*", SearchOption.AllDirectories);
-            foreach(var file in files)
+            foreach (var file in files)
             {
-                if(file.EndsWith(".cs"))
+                if (file.EndsWith(".cs"))
                 {
                     int lineCounter = 0;
 #if UNITY_ANDROID
@@ -364,7 +364,7 @@ public class LocalizationTool
                                 {
                                     if (i + 1 < content.Length)
                                     {
-                                        if(!keyStrings.Contains(content[i + 1]))
+                                        if (!keyStrings.Contains(content[i + 1]))
                                         {
                                             csvLines.Add("\"" + scriptName + "_" + lineCounter + "\",\"" + content[i + 1] + "\"");
                                             keyStrings.Add(content[i + 1]);
@@ -492,7 +492,7 @@ public class LocalizationTool
                         if (line.Contains("new UIDialog.DialogData(") || line.Contains("UIManager.Instance._bubblePool.ShowBubble("))
                         {
                             int wordsCounter = 0;
-                            foreach(var words in GetPatternText(line, false))
+                            foreach (var words in GetPatternText(line, false))
                             {
                                 wordsCounter++;
                                 foreach (var character in words)
@@ -565,7 +565,7 @@ public class LocalizationTool
                         if (line.Contains("Debug.Log") || line.Contains("DebugManager.Debug") || line.Contains("DebugManager.Log") || line.Contains("[Header(") || line.Contains("[Obsolete("))
                             continue;
 
-                        if(line.Contains("\""))
+                        if (line.Contains("\""))
                         {
                             {
                                 foreach (var character in line)
@@ -622,16 +622,16 @@ public class LocalizationTool
                     {
                         if (line.Contains("//public string "))
                         {
-                            counter ++;
+                            counter++;
                             //Debug.Log(file + "  " + counter + "  " + line);
                         }
                     }
 
-                    while(counter > 0)
+                    while (counter > 0)
                     {
                         for (int i = 0; i < lines.Count; i++)
                         {
-                            if(lines[i].Contains("//public string "))
+                            if (lines[i].Contains("//public string "))
                             {
                                 lines[i] = lines[i].Replace("//public", "public");
                                 lines.Insert(i + 1, "#endif");
@@ -730,7 +730,7 @@ public class LocalizationTool
             }
 
             var lines = File.ReadAllLines(file);
-            for(int i = 0; i < lines.Length; i ++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 var content = lines[i].Split(new[] { ",\"" }, StringSplitOptions.None);
                 if (content.Length > 0)
@@ -744,9 +744,9 @@ public class LocalizationTool
                         tcContent += "\"" + ConvertChinTrad(content[1]);
 
                         //判断后续行文本是否是同一组
-                        for(int j = i + 1; j < lines.Length; j ++)
+                        for (int j = i + 1; j < lines.Length; j++)
                         {
-                            if(lines[j].Length == 0 )
+                            if (lines[j].Length == 0)
                             {
                                 scContent += "\\n\\n";
                                 tcContent += "\\n\\n";
@@ -795,15 +795,16 @@ public class LocalizationTool
         Debug.Log("done");
     }
 
-    [MenuItem("Tools/Localization/Mix SC&TC")]
+    [MenuItem("Tools/Localization/Mix SC&TC&EN")]
     public static void LocalizationMixScTc()
     {
         var folder = EditorUtility.OpenFolderPanel("选择导出目录", Application.dataPath, "");
 
         var tcn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("tcn");
         var scn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("scn");
+        var en = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("en"); // 增加英文本地化数据
 
-        var outFile = "文本.csv" ;
+        var outFile = "文本.csv";
 
         var output = Path.Combine(folder, outFile);
         if (File.Exists(output))
@@ -814,10 +815,15 @@ public class LocalizationTool
         {
             var line = "\"" + item.Key + "\",\"";
             line += item.Value.content + "\"";
-            LocalizationManager.TextContent tLine ;
-            if(tcn.TryGetValue(item.Key, out tLine))
+            LocalizationManager.TextContent tLine;
+            LocalizationManager.TextContent eLine;
+            if (tcn.TryGetValue(item.Key, out tLine))
             {
                 line += ",\"" + tLine.content + "\"";
+            }
+            if (en.TryGetValue(item.Key, out eLine))
+            {
+                line += ",\"" + eLine.content + "\"";
             }
             lines.Add(line);
         }
@@ -835,170 +841,327 @@ public class LocalizationTool
     {
         var tcn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("tcn");
         var scn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("scn");
+        var en = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("en"); // 增加英文词典
         var fileSc = Path.Combine(Application.dataPath, "LocalResources/Json/I18n/scn.json");
         var fileTc = Path.Combine(Application.dataPath, "LocalResources/Json/I18n/tcn.json");
+        var fileEn = Path.Combine(Application.dataPath, "LocalResources/Json/I18n/en.json"); // 增加英文json文件
 
-        var files = new List<string>() { "i18n.csv", "i18n_ui.csv" };
+        // var files = new List<string>() { "i18n.csv", "i18n_ui.csv" };
+        var files = new List<string>() { "i18n.csv", "i18n_ui.csv", "i18n_en.csv", "i18n_ui_en.csv" }; // 增加英文文档
         foreach (var item in files)
         {
             var file = Path.Combine(Application.dataPath, item);
+            // if (!File.Exists(file))
+            // {
+            //     Debug.LogError("未找到本地化文本文档" + item + "，请检查。");
+            //     continue;
+            // }
+
             if (!File.Exists(file))
             {
-                Debug.LogError("未找到本地化文本文档" + item + "，请检查。");
-                continue;
-            }
-
-            var lines = File.ReadAllLines(file);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                var content = lines[i].Split(new[] { ",\"" }, StringSplitOptions.None);
-                if (content.Length > 0)
+                // 检查本地化文档
+                if (item.EndsWith("_en.csv") || item.EndsWith("_ui_en.csv"))
                 {
-                    if (content.Length > 1 && content[0].Length > 2)
-                    {
-                        var key = content[0].Substring(1, content[0].Length - 2);
-                        //新id的
-                        if (!tcn.ContainsKey(key) || !scn.ContainsKey(key) || (content[1].Length > 1 && scn[key].content != (content[1].Substring(0, content[1].Length - 1))))
-                        {
-                            //Debug.Log(!tcn.ContainsKey(key));
-                            //Debug.Log(!scn.ContainsKey(key));
-                            //Debug.Log(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)));
-
-                            var scContent = content[1];
-                            var tcContent = ConvertChinTrad(content[1]);
-
-                            //判断后续行文本是否是同一组
-                            for (int j = i + 1; j < lines.Length; j++)
-                            {
-                                if (lines[j].Length == 0)
-                                {
-                                    scContent += "\\n\\n";
-                                    tcContent += "\\n\\n";
-                                    i++;
-                                }
-                                else if (lines[j].Length > 0 && !lines[j].StartsWith("\""))
-                                {
-                                    scContent += "\\n" + lines[j];
-                                    tcContent += "\\n" + ConvertChinTrad(lines[j]);
-                                    i++;
-                                }
-                                else
-                                    break;
-                            }
-
-                            scn[key] = new LocalizationManager.TextContent();
-                            tcn[key] = new LocalizationManager.TextContent();
-                            scn[key].content = scContent.Substring(0, scContent.Length - 1);
-                            tcn[key].content = CheckTcnWrongWords(tcContent.Substring(0, tcContent.Length - 1));
-                            Debug.Log(key);
-                            Debug.Log(scContent);
-                            Debug.Log(tcContent);
-                        }
-                        ////TODO 同id不同文本的
-                        //else if(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)))
-                        //{
-                        //    //Debug.Log(key);
-                        //    //Debug.Log(scn[key].content);
-                        //    //Debug.Log(content[1].Substring(0, content[1].Length - 1));
-                        //}
-                    }
+                    Debug.LogWarning("未找到英文本地化文本文档" + item + "，跳过英文合并。");
+                    continue;
+                }
+                else
+                {
+                    Debug.LogError("未找到本地化文本文档" + item + "，请检查。");
+                    continue;
                 }
             }
+
+            if (item.EndsWith("_en.csv") || item.EndsWith("_ui_en.csv"))
+            {
+                // 合并英文
+                MergeLocalization(en, file, "en", fileEn);
+            }
+            else
+            {
+                // 合并简体、繁体中文
+                MergeLocalization(scn, file, "sc", fileSc);
+                MergeLocalization(tcn, file, "tc", fileTc);
+            }
+
+            //     var lines = File.ReadAllLines(file);
+            //     for (int i = 0; i < lines.Length; i++)
+            //     {
+            //         var content = lines[i].Split(new[] { ",\"" }, StringSplitOptions.None);
+            //         if (content.Length > 0)
+            //         {
+            //             if (content.Length > 1 && content[0].Length > 2)
+            //             {
+            //                 var key = content[0].Substring(1, content[0].Length - 2);
+            //                 //新id的
+            //                 if (!tcn.ContainsKey(key) || !scn.ContainsKey(key) || (content[1].Length > 1 && scn[key].content != (content[1].Substring(0, content[1].Length - 1))))
+            //                 {
+            //                     //Debug.Log(!tcn.ContainsKey(key));
+            //                     //Debug.Log(!scn.ContainsKey(key));
+            //                     //Debug.Log(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)));
+            //
+            //                     var scContent = content[1];
+            //                     var tcContent = ConvertChinTrad(content[1]);
+            //
+            //                     //判断后续行文本是否是同一组
+            //                     for (int j = i + 1; j < lines.Length; j++)
+            //                     {
+            //                         if (lines[j].Length == 0)
+            //                         {
+            //                             scContent += "\\n\\n";
+            //                             tcContent += "\\n\\n";
+            //                             i++;
+            //                         }
+            //                         else if (lines[j].Length > 0 && !lines[j].StartsWith("\""))
+            //                         {
+            //                             scContent += "\\n" + lines[j];
+            //                             tcContent += "\\n" + ConvertChinTrad(lines[j]);
+            //                             i++;
+            //                         }
+            //                         else
+            //                             break;
+            //                     }
+            //
+            //                     scn[key] = new LocalizationManager.TextContent();
+            //                     tcn[key] = new LocalizationManager.TextContent();
+            //                     scn[key].content = scContent.Substring(0, scContent.Length - 1);
+            //                     tcn[key].content = CheckTcnWrongWords(tcContent.Substring(0, tcContent.Length - 1));
+            //                     Debug.Log(key);
+            //                     Debug.Log(scContent);
+            //                     Debug.Log(tcContent);
+            //                 }
+            //                 ////TODO 同id不同文本的
+            //                 //else if(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)))
+            //                 //{
+            //                 //    //Debug.Log(key);
+            //                 //    //Debug.Log(scn[key].content);
+            //                 //    //Debug.Log(content[1].Substring(0, content[1].Length - 1));
+            //                 //}
+            //             }
+            //         }
+            //     }
+            // }
+            //
+            // File.WriteAllText(fileSc, JsonMapper.ToJson(scn).Replace("\\\\n", "\\n"));
+            // File.WriteAllText(fileTc, JsonMapper.ToJson(tcn).Replace("\\\\n", "\\n"));
+            // File.WriteAllText(fileEn, JsonMapper.ToJson(en).Replace("\\\\n", "\\n")); // 新增英文文件写入
+
+            AssetDatabase.Refresh();
+
+            Debug.Log("done");
         }
-
-        File.WriteAllText(fileSc, JsonMapper.ToJson(scn).Replace("\\\\n", "\\n"));
-        File.WriteAllText(fileTc, JsonMapper.ToJson(tcn).Replace("\\\\n", "\\n"));
-
-        AssetDatabase.Refresh();
-
-        Debug.Log("done");
     }
 
     [MenuItem("Tools/Localization/Patch")]
     public static void LocalizationPatch()
     {
-        var tcn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("tcn");
-        var scn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("scn");
+        // var tcn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("tcn");
+        // var scn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("scn");
+        // var en = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("en");
         var fileSc = Path.Combine(Application.dataPath, "LocalResources/Json/I18nPatch/scn.json");
         var fileTc = Path.Combine(Application.dataPath, "LocalResources/Json/I18nPatch/tcn.json");
+        var fileEn = Path.Combine(Application.dataPath, "LocalResources/Json/I18nPatch/en.json"); // 增加英文json文件
 
         var scnPatch = new Dictionary<string, LocalizationManager.TextContent>();
         var tcnPatch = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("tcn", "Json/i18nPatch");
+        var enPatch = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("en", "Json/i18nPatch"); // 增加英文
 
-        var files = new List<string>() { "i18n.csv", "i18n_ui.csv" };
+        var files = new List<string>() { "i18n.csv", "i18n_ui.csv", "i18n_en.csv", "i18n_ui_en.csv" }; // 增加英文文档
+        // var files = new List<string>() { "i18n.csv", "i18n_ui.csv" };
         foreach (var item in files)
         {
             var file = Path.Combine(Application.dataPath, item);
+            // if (!File.Exists(file))
+            // {
+            //     Debug.LogError("未找到本地化文本文档" + item + "，请检查。");
+            //     continue;
+            //
+            // }
             if (!File.Exists(file))
             {
-                Debug.LogError("未找到本地化文本文档" + item + "，请检查。");
-                continue;
-            }
-
-            var lines = File.ReadAllLines(file);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                var content = lines[i].Split(new[] { ",\"" }, StringSplitOptions.None);
-                if (content.Length > 0)
+                // 检查本地化文档
+                if (item.EndsWith("_en.csv") || item.EndsWith("_ui_en.csv"))
                 {
-                    if (content.Length > 1 && content[0].Length > 2)
-                    {
-                        var key = content[0].Substring(1, content[0].Length - 2);
-                        //新id的
-                        if (!tcn.ContainsKey(key) || !scn.ContainsKey(key) || (content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1))))
-                        {
-                            //Debug.Log(!tcn.ContainsKey(key));
-                            //Debug.Log(!scn.ContainsKey(key));
-                            //Debug.Log(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)));
-
-                            var scContent = content[1];
-                            var tcContent = ConvertChinTrad(content[1]);
-
-                            //判断后续行文本是否是同一组
-                            for (int j = i + 1; j < lines.Length; j++)
-                            {
-                                if (lines[j].Length == 0)
-                                {
-                                    scContent += "\\n\\n";
-                                    tcContent += "\\n\\n";
-                                    i++;
-                                }
-                                else if (lines[j].Length > 0 && !lines[j].StartsWith("\""))
-                                {
-                                    scContent += "\\n" + lines[j];
-                                    tcContent += "\\n" + ConvertChinTrad(lines[j]);
-                                    i++;
-                                }
-                                else
-                                    break;
-                            }
-
-                            scnPatch[key] = new LocalizationManager.TextContent();
-                            tcnPatch[key] = new LocalizationManager.TextContent();
-                            scnPatch[key].content = scContent.Substring(0, scContent.Length - 1);
-                            tcnPatch[key].content = CheckTcnWrongWords(tcContent.Substring(0, tcContent.Length - 1));
-                            Debug.Log(key);
-                            Debug.Log(scContent);
-                            Debug.Log(tcContent);
-                        }
-                        ////TODO 同id不同文本的
-                        //else if(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)))
-                        //{
-                        //    //Debug.Log(key);
-                        //    //Debug.Log(scn[key].content);
-                        //    //Debug.Log(content[1].Substring(0, content[1].Length - 1));
-                        //}
-                    }
+                    Debug.LogWarning("未找到英文本地化文本文档" + item + "，跳过英文合并。");
+                    continue;
+                }
+                else
+                {
+                    Debug.LogError("未找到本地化文本文档" + item + "，请检查。");
+                    continue;
                 }
             }
+
+
+            if (item.EndsWith("_en.csv") || item.EndsWith("_ui_en.csv"))
+            {
+                MergeLocalization(enPatch, file, "en", fileEn);
+            }
+            else
+            {
+                MergeLocalization(scnPatch, file, "sc", fileSc);
+                MergeLocalization(tcnPatch, file, "tc", fileTc);
+            }
+
+
+            //     var lines = File.ReadAllLines(file);
+            //     for (int i = 0; i < lines.Length; i++)
+            //     {
+            //         var content = lines[i].Split(new[] { ",\"" }, StringSplitOptions.None);
+            //         if (content.Length > 0)
+            //         {
+            //             if (content.Length > 1 && content[0].Length > 2)
+            //             {
+            //                 var key = content[0].Substring(1, content[0].Length - 2);
+            //                 //新id的
+            //                 if (!tcn.ContainsKey(key) || !scn.ContainsKey(key) || (content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1))))
+            //                 {
+            //                     //Debug.Log(!tcn.ContainsKey(key));
+            //                     //Debug.Log(!scn.ContainsKey(key));
+            //                     //Debug.Log(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)));
+            //
+            //                     var scContent = content[1];
+            //                     var tcContent = ConvertChinTrad(content[1]);
+            //
+            //                     //判断后续行文本是否是同一组
+            //                     for (int j = i + 1; j < lines.Length; j++)
+            //                     {
+            //                         if (lines[j].Length == 0)
+            //                         {
+            //                             scContent += "\\n\\n";
+            //                             tcContent += "\\n\\n";
+            //                             i++;
+            //                         }
+            //                         else if (lines[j].Length > 0 && !lines[j].StartsWith("\""))
+            //                         {
+            //                             scContent += "\\n" + lines[j];
+            //                             tcContent += "\\n" + ConvertChinTrad(lines[j]);
+            //                             i++;
+            //                         }
+            //                         else
+            //                             break;
+            //                     }
+            //
+            //                     scnPatch[key] = new LocalizationManager.TextContent();
+            //                     tcnPatch[key] = new LocalizationManager.TextContent();
+            //                     scnPatch[key].content = scContent.Substring(0, scContent.Length - 1);
+            //                     tcnPatch[key].content = CheckTcnWrongWords(tcContent.Substring(0, tcContent.Length - 1));
+            //                     Debug.Log(key);
+            //                     Debug.Log(scContent);
+            //                     Debug.Log(tcContent);
+            //                 }
+            //                 ////TODO 同id不同文本的
+            //                 //else if(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)))
+            //                 //{
+            //                 //    //Debug.Log(key);
+            //                 //    //Debug.Log(scn[key].content);
+            //                 //    //Debug.Log(content[1].Substring(0, content[1].Length - 1));
+            //                 //}
+            //             }
+            //         }
+            //     }
+            // }
+            //
+            // File.WriteAllText(fileSc, JsonMapper.ToJson(scnPatch).Replace("\\\\n", "\\n"));
+            // File.WriteAllText(fileTc, JsonMapper.ToJson(tcnPatch).Replace("\\\\n", "\\n"));
+
+            AssetDatabase.Refresh();
+
+            Debug.Log("done");
+        }
+    }
+
+    /// <summary>
+    /// 本地化文档合并
+    /// </summary>
+    /// <param name="langDict">语言词典</param>
+    /// <param name="filePath">文档路径</param>
+    /// <param name="language">语言参数</param>
+    /// <param name="outputFilePath">输出路径</param>
+    public static void MergeLocalization(Dictionary<string, LocalizationManager.TextContent> langDict, string filePath, string language, string outputFilePath)
+    {
+        var lines = File.ReadAllLines(filePath);
+        // var tcn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("tcn");
+        // var scn = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("scn");
+        // var en = LitJsonDoFile<Dictionary<string, LocalizationManager.TextContent>>("en");
+
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var content = lines[i].Split(new[] { ",\"" }, StringSplitOptions.None);
+            if (content.Length > 0)
+            {
+                if (content.Length > 1 && content[0].Length > 2)
+                {
+                    var key = content[0].Substring(1, content[0].Length - 2);
+                    var langContent = "";
+                    if (language == "en" || language == "sc")
+                    {
+                        langContent = content[1];
+                    }
+                    else if (language == "tc")
+                    {
+                        langContent = ConvertChinTrad(content[1]);
+                    }
+
+                    // var scContent = content[1];
+                    // var tcContent = ConvertChinTrad(content[1]);
+                    // var enContent = (language == "en") ? content[1] : "{}";
+
+                    //判断后续行文本是否是同一组
+                    for (int j = i + 1; j < lines.Length; j++)
+                    {
+                        if (lines[j].Length == 0)
+                        {
+                            langContent += "\\n\\n";
+                            // scContent += "\\n\\n";
+                            // tcContent += "\\n\\n";
+                            // enContent += "\\n\\n";
+                            i++;
+                        }
+                        else if (lines[j].Length > 0 && !lines[j].StartsWith("\""))
+                        {
+                            langContent += language == "tc" ? "\\n" + ConvertChinTrad(lines[j]) : "\\n" + lines[j];
+                            // scContent += "\\n" + lines[j];
+                            // tcContent += "\\n" + ConvertChinTrad(lines[j]);
+                            // enContent += "\\n" + lines[j];
+                            i++;
+                        }
+                        else
+                            break;
+                    }
+
+                    langDict[key] = new LocalizationManager.TextContent();
+                    langDict[key].content = language == "tc"
+                        ? CheckTcnWrongWords(langContent.Substring(0, langContent.Length - 1))
+                        : langContent.Substring(0, langContent.Length - 1);
+
+                    // scn[key] = new LocalizationManager.TextContent();
+                    // tcn[key] = new LocalizationManager.TextContent();
+                    // en[key] = new LocalizationManager.TextContent();
+                    // scn[key].content = scContent.Substring(0, scContent.Length - 1);
+                    // tcn[key].content = CheckTcnWrongWords(tcContent.Substring(0, tcContent.Length - 1));
+                    // en[key].content = enContent.Substring(0, enContent.Length - 1);
+                    Debug.Log(key);
+                    Debug.Log(langContent);
+                    // Debug.Log(scContent);
+                    // Debug.Log(tcContent);
+                    // Debug.Log(enContent);
+                }
+            }
+
+            ////TODO 同id不同文本的
+            //else if(content[1].Length > 1 && !scn[key].content.StartsWith(content[1].Substring(0, content[1].Length - 1)))
+            //{
+            //    //Debug.Log(key);
+            //    //Debug.Log(scn[key].content);
+            //    //Debug.Log(content[1].Substring(0, content[1].Length - 1));
+            //}
         }
 
-        File.WriteAllText(fileSc, JsonMapper.ToJson(scnPatch).Replace("\\\\n", "\\n"));
-        File.WriteAllText(fileTc, JsonMapper.ToJson(tcnPatch).Replace("\\\\n", "\\n"));
+        // 写入对应语言json文件
+        File.WriteAllText(outputFilePath, JsonMapper.ToJson(langDict).Replace("\\\\n", "\\n"));
 
-        AssetDatabase.Refresh();
-
-        Debug.Log("done");
     }
 
     /// <summary>
@@ -1046,7 +1209,7 @@ public class LocalizationTool
         foreach (Match match in Regex.Matches(text, "\"([^\"]*)\""))
         {
             //Debug.Log(match.Value);
-            if(quote)
+            if (quote)
                 result.Add(match.Value);
             else
                 result.Add(match.Value.Substring(1, match.Value.Length - 2));
@@ -1072,7 +1235,7 @@ public class LocalizationTool
     {
         for (int i = 0; i < wrongTCN.Count; i++)
         {
-            if(tcn.Contains(wrongTCN[i]))
+            if (tcn.Contains(wrongTCN[i]))
             {
                 tcn = tcn.Replace(wrongTCN[i], rightTCN[i]);
             }
